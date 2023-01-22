@@ -10,12 +10,17 @@ namespace LeitorArquivosGrandes.Services
 {
     public class Pastas : IPastas
     {
-        public DirectoryInfo[] ListaPastas(string caminho)
+        public Pastas()
+        {
+
+        }
+
+        public DirectoryInfo[] ListaSubPastas(string caminho)
         {
             return new DirectoryInfo(caminho).GetDirectories();
         }
 
-        public string SelecionaPasta()
+        public string SelecionaSubPasta()
         {
             using(FolderBrowserDialog dialog = new FolderBrowserDialog())
             {

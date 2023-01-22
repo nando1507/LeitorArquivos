@@ -8,9 +8,7 @@ namespace LeitorArquivosGrandes.Interfaces
 {
     public interface IArquivos
     {
-        string SelecionaArquivo(string filtro);
-
-        string[] SelecionaArquivo(string filtro, bool MultiplosArquivos);
+        List<FileInfo> SelecionaArquivo(string filtro, bool MultiplosArquivos);
 
         bool ArquivoExiste(string Caminho);
     }

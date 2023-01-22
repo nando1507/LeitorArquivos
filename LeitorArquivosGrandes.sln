@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeitorArquivosGrandes", "LeitorArquivosGrandes\LeitorArquivosGrandes.csproj", "{512C11E3-76D1-431F-9BE6-511F0CFB6EB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeitorArquivosGrandes", "LeitorArquivosGrandes\LeitorArquivosGrandes.csproj", "{512C11E3-76D1-431F-9BE6-511F0CFB6EB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeitorArquivosGrandesTests", "LeitorArquivosGrandesTests\LeitorArquivosGrandesTests.csproj", "{6A89F0E4-864C-40AA-9C45-9A6F6B2425D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{512C11E3-76D1-431F-9BE6-511F0CFB6EB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{512C11E3-76D1-431F-9BE6-511F0CFB6EB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{512C11E3-76D1-431F-9BE6-511F0CFB6EB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A89F0E4-864C-40AA-9C45-9A6F6B2425D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A89F0E4-864C-40AA-9C45-9A6F6B2425D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A89F0E4-864C-40AA-9C45-9A6F6B2425D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A89F0E4-864C-40AA-9C45-9A6F6B2425D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

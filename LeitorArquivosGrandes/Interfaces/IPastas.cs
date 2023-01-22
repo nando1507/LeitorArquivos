@@ -8,9 +8,9 @@ namespace LeitorArquivosGrandes.Interfaces
 {
     public interface IPastas
     {
-        DirectoryInfo[] ListaPastas(string caminho);
+        DirectoryInfo[] ListaSubPastas(string caminho);
 
-        string SelecionaPasta();
+        string SelecionaSubPasta();
         
     }
 }

@@ -11,10 +11,10 @@ namespace LeitorArquivosGrandes.Services
     {
         public Arquivos()
         {
-           
+
         }
 
-        public string SelecionaArquivo(string filtro)
+        public FileInfo SelecionaArquivo(string filtro)
         {
             using (OpenFileDialog file = new OpenFileDialog())
             {
@@ -25,35 +25,39 @@ namespace LeitorArquivosGrandes.Services
                 file.RestoreDirectory = true;
                 if (file.ShowDialog() == DialogResult.OK)
                 {
-                    return file.FileName;
+                    FileInfo fileInfo = new FileInfo(file.FileName);
+                    return fileInfo;
                 }
             }
-            return "";
+            return null;
         }
-        
+
         public bool ArquivoExiste(string Caminho)
         {
             return File.Exists(Caminho);
         }
 
-        public string[] SelecionaArquivo(string filtro, bool MultiplosArquivos)
+        public List<FileInfo> SelecionaArquivo(string filtro, bool MultiplosArquivos)
         {
             using (OpenFileDialog file = new OpenFileDialog())
             {
                 file.Filter = filtro;
                 file.InitialDirectory = Path.GetDirectoryName(path: Environment.GetFolderPath(folder: Environment.SpecialFolder.Desktop));
                 file.Title = "Selecione arquivo desejado";
-                file.FilterIndex = 2;
+                file.FilterIndex = 1;
                 file.RestoreDirectory = true;
                 file.Multiselect = MultiplosArquivos;
                 if (file.ShowDialog() == DialogResult.OK)
                 {
-                    return file.FileNames;
+                    List<FileInfo> fileInfo = new List<FileInfo>();
+                    foreach (var item in file.FileNames)
+                    {
+                        fileInfo.Add(new FileInfo(item));
+                    }
+                    return fileInfo;
                 }
             }
-            return new string[] { };
+            return null;
         }
-
-
     }
 }
