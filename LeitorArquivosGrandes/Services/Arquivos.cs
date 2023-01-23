@@ -59,5 +59,16 @@ namespace LeitorArquivosGrandes.Services
             }
             return null;
         }
+
+        public List<FileInfo> ArquivosPasta(string caminho, string filtro)
+        {
+            List<FileInfo> fileInfo = new List<FileInfo>();
+            DirectoryInfo dir = new DirectoryInfo(caminho);
+            FileInfo[]? aux = dir.GetFiles(filtro, SearchOption.AllDirectories);
+            fileInfo.AddRange(aux.ToList());           
+
+            return fileInfo;
+        }
+
     }
 }

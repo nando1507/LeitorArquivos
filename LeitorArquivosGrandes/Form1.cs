@@ -1,3 +1,4 @@
+using LeitorArquivosGrandes.Interfaces;
 using LeitorArquivosGrandes.Services;
 using System.Data;
 using System.Text;
@@ -31,9 +32,13 @@ namespace LeitorArquivosGrandes
         {
             string filtro = "Csv files (*.csv)|*.CSV|All files (*.*)|*.*";
             List<FileInfo>? arq = new Arquivos().SelecionaArquivo(filtro, MultiplosArquivos: true);
-
+            if (arq == null)
+            {
+                return;
+            }
             if (arq.Count == 1)
             {
+                cboArquivos.Text = arq[0].ToString();
                 CarregaGrid(arq);
             }
             else
@@ -48,9 +53,13 @@ namespace LeitorArquivosGrandes
         {
             string filtro = "Txt files (*.Txt)|*.Txt|All files (*.*)|*.*";
             List<FileInfo>? arq = new Arquivos().SelecionaArquivo(filtro, true);
-
+            if (arq == null)
+            {
+                return;
+            }
             if (arq.Count == 1)
             {
+                cboArquivos.Text = arq[0].ToString();
                 CarregaGrid(arq);
             }
             else
@@ -63,9 +72,13 @@ namespace LeitorArquivosGrandes
         {
             string filtro = "All files (*.*)|*.*";
             List<FileInfo>? arq = new Arquivos().SelecionaArquivo(filtro, true);
-
+            if(arq == null)
+            {
+                return;
+            }
             if (arq.Count == 1)
             {
+                cboArquivos.Text = arq[0].ToString();
                 CarregaGrid(arq);
             }
             else
@@ -78,6 +91,13 @@ namespace LeitorArquivosGrandes
         {
             string? caminho = new Pastas().SelecionaSubPasta();
             DirectoryInfo[]? aux = new Pastas().ListaSubPastas(caminho);
+            if (aux == null)
+            {
+                return;
+            }
+            cboArquivos.DataSource = new List<string>() { caminho };
+            dgvLeitor.DataSource = aux;
+            lblQuantidade.Text = aux.Length.ToString("N0");
         }
 
         private void chkLimite_CheckedChanged(object sender, EventArgs e)
@@ -92,7 +112,7 @@ namespace LeitorArquivosGrandes
 
         private void CarregaGrid(List<FileInfo> arq)
         {
-            dgvLeitor.DataSource = new Leitura().LeituraArquivo(new Models.LayoutArquivo()
+            var arquivo = new Models.LayoutArquivo()
             {
                 File = arq,
                 LimiteLinhas = chkLimite.Checked,
@@ -100,13 +120,68 @@ namespace LeitorArquivosGrandes
                 Enco = Encoding.UTF8,
                 Header = true,
                 Delimitador = cboDelimitador.SelectedItem.ToString()
-            });
+            };
+
+            dgvLeitor.DataSource = new Leitura().LeituraArquivo(arquivo);
+            lblQuantidade.Text = new Leitura().LinhasArquivos(arquivo).ToString("N0");
         }
 
         private void CarregaCombo(List<FileInfo> arq)
         {
             btnCarregar.Visible = true;
             cboArquivos.DataSource = arq;
+        }
+
+        private void dgvLeitor_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {          
+            if(dgvLeitor.Columns.Count < 3)
+            {
+                return;
+            }
+
+            if (MessageBox.Show("Deseja listar Pastas?", "Arquivos", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                string? PastaSelecionada = dgvLeitor[dgvLeitor.Columns["FullName"].Index, e.RowIndex].Value.ToString();
+                string filtro = "*.*";
+                var arquivo = new Models.LayoutArquivo()
+                {
+                    File = new List<FileInfo>() { new FileInfo(PastaSelecionada) },
+                    LimiteLinhas = chkLimite.Checked,
+                    Linhas = NumValues.Value,
+                    Enco = Encoding.UTF8,
+                    Header = true,
+                    Delimitador = cboDelimitador.SelectedItem.ToString()
+                };
+                cboArquivos.DataSource = new List<string>() { PastaSelecionada };
+                dgvLeitor.DataSource = new Leitura().LeituraArquivo(arquivo);
+                lblQuantidade.Text = new Leitura().LinhasArquivos(arquivo).ToString("N0");
+            }
+            else if (MessageBox.Show("Deseja listar arquivos?", "Arquivos", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                string? PastaSelecionada = dgvLeitor[dgvLeitor.Columns["FullName"].Index, e.RowIndex].Value.ToString();
+                string filtro = "*.*";
+                cboArquivos.DataSource = new List<string>() { PastaSelecionada };
+                var arquivo = new Models.LayoutArquivo()
+                {
+                    File = new List<FileInfo>() { new FileInfo(PastaSelecionada) },
+                    LimiteLinhas = chkLimite.Checked,
+                    Linhas = NumValues.Value,
+                    Enco = Encoding.UTF8,
+                    Header = true,
+                    Delimitador = cboDelimitador.SelectedItem.ToString()
+                };
+                dgvLeitor.DataSource = new Arquivos().ArquivosPasta(caminho: PastaSelecionada, filtro);
+                lblQuantidade.Text = dgvLeitor.Rows.Count.ToString("N0");
+            }
+            else
+            {
+                MessageBox.Show("Nenhuma Ação Selecionada");
+            }
+        }
+
+        private void chkDelimitar_CheckedChanged(object sender, EventArgs e)
+        {
+            cboDelimitador.Enabled = chkDelimitar.Checked;
         }
     }
 }

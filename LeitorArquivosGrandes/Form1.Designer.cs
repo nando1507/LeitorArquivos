@@ -38,19 +38,23 @@
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvLeitor = new System.Windows.Forms.DataGridView();
             this.groupAbertura = new System.Windows.Forms.GroupBox();
-            this.cboDelimitador = new System.Windows.Forms.ComboBox();
+            this.groupLeitura = new System.Windows.Forms.GroupBox();
             this.chkDelimitar = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.btnCarregar = new System.Windows.Forms.Button();
+            this.cboDelimitador = new System.Windows.Forms.ComboBox();
             this.chkLimite = new System.Windows.Forms.CheckBox();
-            this.lblLinhasLidas = new System.Windows.Forms.Label();
-            this.lblArquivos = new System.Windows.Forms.Label();
             this.NumValues = new System.Windows.Forms.NumericUpDown();
+            this.btnCarregar = new System.Windows.Forms.Button();
+            this.lblArquivos = new System.Windows.Forms.Label();
             this.cboArquivos = new System.Windows.Forms.ComboBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.btnLinhas = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblQuantidade = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLeitor)).BeginInit();
             this.groupAbertura.SuspendLayout();
+            this.groupLeitura.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumValues)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -121,39 +125,66 @@
             // 
             // dgvLeitor
             // 
+            this.dgvLeitor.AllowUserToAddRows = false;
+            this.dgvLeitor.AllowUserToDeleteRows = false;
+            this.dgvLeitor.AllowUserToOrderColumns = true;
             this.dgvLeitor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvLeitor.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvLeitor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvLeitor.Location = new System.Drawing.Point(12, 120);
+            this.dgvLeitor.Location = new System.Drawing.Point(12, 131);
             this.dgvLeitor.Name = "dgvLeitor";
             this.dgvLeitor.RowTemplate.Height = 25;
-            this.dgvLeitor.Size = new System.Drawing.Size(776, 318);
+            this.dgvLeitor.Size = new System.Drawing.Size(776, 283);
             this.dgvLeitor.TabIndex = 1;
+            this.dgvLeitor.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLeitor_CellContentDoubleClick);
             // 
             // groupAbertura
             // 
             this.groupAbertura.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupAbertura.Controls.Add(this.cboDelimitador);
-            this.groupAbertura.Controls.Add(this.chkDelimitar);
-            this.groupAbertura.Controls.Add(this.label1);
+            this.groupAbertura.Controls.Add(this.groupLeitura);
             this.groupAbertura.Controls.Add(this.btnCarregar);
-            this.groupAbertura.Controls.Add(this.chkLimite);
-            this.groupAbertura.Controls.Add(this.lblLinhasLidas);
             this.groupAbertura.Controls.Add(this.lblArquivos);
-            this.groupAbertura.Controls.Add(this.NumValues);
             this.groupAbertura.Controls.Add(this.cboArquivos);
             this.groupAbertura.Location = new System.Drawing.Point(12, 27);
             this.groupAbertura.Name = "groupAbertura";
-            this.groupAbertura.Size = new System.Drawing.Size(776, 87);
+            this.groupAbertura.Size = new System.Drawing.Size(776, 98);
             this.groupAbertura.TabIndex = 2;
             this.groupAbertura.TabStop = false;
             this.groupAbertura.Text = "Arquivos";
             // 
+            // groupLeitura
+            // 
+            this.groupLeitura.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupLeitura.Controls.Add(this.chkDelimitar);
+            this.groupLeitura.Controls.Add(this.cboDelimitador);
+            this.groupLeitura.Controls.Add(this.chkLimite);
+            this.groupLeitura.Controls.Add(this.NumValues);
+            this.groupLeitura.Location = new System.Drawing.Point(500, 12);
+            this.groupLeitura.Name = "groupLeitura";
+            this.groupLeitura.Size = new System.Drawing.Size(270, 80);
+            this.groupLeitura.TabIndex = 10;
+            this.groupLeitura.TabStop = false;
+            this.groupLeitura.Text = "Leitura";
+            // 
+            // chkDelimitar
+            // 
+            this.chkDelimitar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkDelimitar.AutoSize = true;
+            this.chkDelimitar.Location = new System.Drawing.Point(12, 26);
+            this.chkDelimitar.Name = "chkDelimitar";
+            this.chkDelimitar.Size = new System.Drawing.Size(79, 19);
+            this.chkDelimitar.TabIndex = 8;
+            this.chkDelimitar.Text = "Delimitar?";
+            this.chkDelimitar.UseVisualStyleBackColor = true;
+            this.chkDelimitar.CheckedChanged += new System.EventHandler(this.chkDelimitar_CheckedChanged);
+            // 
             // cboDelimitador
             // 
             this.cboDelimitador.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboDelimitador.Enabled = false;
             this.cboDelimitador.FormattingEnabled = true;
             this.cboDelimitador.Items.AddRange(new object[] {
             ";",
@@ -166,45 +197,11 @@
             "*",
             "+",
             "="});
-            this.cboDelimitador.Location = new System.Drawing.Point(467, 45);
+            this.cboDelimitador.Location = new System.Drawing.Point(12, 51);
             this.cboDelimitador.Name = "cboDelimitador";
             this.cboDelimitador.Size = new System.Drawing.Size(103, 23);
             this.cboDelimitador.TabIndex = 9;
-            // 
-            // chkDelimitar
-            // 
-            this.chkDelimitar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkDelimitar.AutoSize = true;
-            this.chkDelimitar.Checked = true;
-            this.chkDelimitar.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkDelimitar.Location = new System.Drawing.Point(382, 47);
-            this.chkDelimitar.Name = "chkDelimitar";
-            this.chkDelimitar.Size = new System.Drawing.Size(79, 19);
-            this.chkDelimitar.TabIndex = 8;
-            this.chkDelimitar.Text = "Delimitar?";
-            this.chkDelimitar.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(467, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(103, 15);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Linhas para leitura";
-            // 
-            // btnCarregar
-            // 
-            this.btnCarregar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCarregar.Location = new System.Drawing.Point(269, 44);
-            this.btnCarregar.Name = "btnCarregar";
-            this.btnCarregar.Size = new System.Drawing.Size(72, 23);
-            this.btnCarregar.TabIndex = 5;
-            this.btnCarregar.Text = "Carregar";
-            this.btnCarregar.UseVisualStyleBackColor = true;
-            this.btnCarregar.Visible = false;
-            this.btnCarregar.Click += new System.EventHandler(this.btnCarregar_Click);
+            this.cboDelimitador.Text = ";";
             // 
             // chkLimite
             // 
@@ -212,37 +209,18 @@
             this.chkLimite.AutoSize = true;
             this.chkLimite.Checked = true;
             this.chkLimite.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkLimite.Location = new System.Drawing.Point(576, 47);
+            this.chkLimite.Location = new System.Drawing.Point(144, 26);
             this.chkLimite.Name = "chkLimite";
-            this.chkLimite.Size = new System.Drawing.Size(68, 19);
+            this.chkLimite.Size = new System.Drawing.Size(102, 19);
             this.chkLimite.TabIndex = 4;
-            this.chkLimite.Text = "Limitar?";
+            this.chkLimite.Text = "Limitar linhas?";
             this.chkLimite.UseVisualStyleBackColor = true;
             this.chkLimite.CheckedChanged += new System.EventHandler(this.chkLimite_CheckedChanged);
-            // 
-            // lblLinhasLidas
-            // 
-            this.lblLinhasLidas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblLinhasLidas.AutoSize = true;
-            this.lblLinhasLidas.Location = new System.Drawing.Point(650, 28);
-            this.lblLinhasLidas.Name = "lblLinhasLidas";
-            this.lblLinhasLidas.Size = new System.Drawing.Size(103, 15);
-            this.lblLinhasLidas.TabIndex = 3;
-            this.lblLinhasLidas.Text = "Linhas para leitura";
-            // 
-            // lblArquivos
-            // 
-            this.lblArquivos.AutoSize = true;
-            this.lblArquivos.Location = new System.Drawing.Point(6, 27);
-            this.lblArquivos.Name = "lblArquivos";
-            this.lblArquivos.Size = new System.Drawing.Size(126, 15);
-            this.lblArquivos.TabIndex = 2;
-            this.lblArquivos.Text = "Arquivos Selecionados";
             // 
             // NumValues
             // 
             this.NumValues.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.NumValues.Location = new System.Drawing.Point(650, 46);
+            this.NumValues.Location = new System.Drawing.Point(144, 51);
             this.NumValues.Minimum = new decimal(new int[] {
             1,
             0,
@@ -257,6 +235,27 @@
             0,
             0});
             // 
+            // btnCarregar
+            // 
+            this.btnCarregar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCarregar.Location = new System.Drawing.Point(269, 44);
+            this.btnCarregar.Name = "btnCarregar";
+            this.btnCarregar.Size = new System.Drawing.Size(72, 23);
+            this.btnCarregar.TabIndex = 5;
+            this.btnCarregar.Text = "Carregar";
+            this.btnCarregar.UseVisualStyleBackColor = true;
+            this.btnCarregar.Visible = false;
+            this.btnCarregar.Click += new System.EventHandler(this.btnCarregar_Click);
+            // 
+            // lblArquivos
+            // 
+            this.lblArquivos.AutoSize = true;
+            this.lblArquivos.Location = new System.Drawing.Point(6, 27);
+            this.lblArquivos.Name = "lblArquivos";
+            this.lblArquivos.Size = new System.Drawing.Size(126, 15);
+            this.lblArquivos.TabIndex = 2;
+            this.lblArquivos.Text = "Arquivos Selecionados";
+            // 
             // cboArquivos
             // 
             this.cboArquivos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -268,11 +267,37 @@
             this.cboArquivos.Size = new System.Drawing.Size(257, 23);
             this.cboArquivos.TabIndex = 0;
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnLinhas,
+            this.lblQuantidade});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 428);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(800, 22);
+            this.statusStrip1.TabIndex = 3;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // btnLinhas
+            // 
+            this.btnLinhas.Name = "btnLinhas";
+            this.btnLinhas.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnLinhas.Size = new System.Drawing.Size(41, 17);
+            this.btnLinhas.Text = "Linhas";
+            // 
+            // lblQuantidade
+            // 
+            this.lblQuantidade.Name = "lblQuantidade";
+            this.lblQuantidade.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblQuantidade.Size = new System.Drawing.Size(13, 17);
+            this.lblQuantidade.Text = "0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.groupAbertura);
             this.Controls.Add(this.dgvLeitor);
             this.Controls.Add(this.menuStrip1);
@@ -286,7 +311,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvLeitor)).EndInit();
             this.groupAbertura.ResumeLayout(false);
             this.groupAbertura.PerformLayout();
+            this.groupLeitura.ResumeLayout(false);
+            this.groupLeitura.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumValues)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -306,12 +335,14 @@
         private ComboBox cboArquivos;
         private ToolStripMenuItem PastaAbrirMenu;
         private NumericUpDown NumValues;
-        private Label lblLinhasLidas;
         private Label lblArquivos;
         private CheckBox chkLimite;
         private Button btnCarregar;
         private CheckBox chkDelimitar;
-        private Label label1;
         private ComboBox cboDelimitador;
+        private GroupBox groupLeitura;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel btnLinhas;
+        private ToolStripStatusLabel lblQuantidade;
     }
 }

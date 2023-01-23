@@ -40,15 +40,15 @@ namespace LeitorArquivosGrandes.Services
                         aux = sr.ReadLine().Split(layout.Delimitador);
 
                         DataRow row = dataTable.NewRow();
-                        int tamanho = !layout.LimiteLinhas ? int.MaxValue : aux.Length;
+                        decimal tamanho = !layout.LimiteLinhas ? decimal.MaxValue : layout.Linhas;
 
-                        for (int j = 0; j < tamanho; j++)
+                        for (int j = 0; j < aux.Length; j++)
                         {
                             row[j] = aux[j];
                         }
                         dataTable.Rows.Add(row);
                         i++;
-                        if (i == tamanho && sr.EndOfStream)
+                        if (i == tamanho || sr.EndOfStream)
                         {
                             return dataTable;
                         }
@@ -59,18 +59,9 @@ namespace LeitorArquivosGrandes.Services
             return null;
         }
 
-        //public DataTable LeituraArquivo(FileInfo[] files, decimal linhas, Encoding enco, bool Header, string delimitador)
-        //{
-        //    DataTable dataTable = new DataTable();
-        //    foreach (var item in files)
-        //    {
-        //        dataTable = new DataTable(item.Name);
-        //    }
-        //    if (dataTable.DataSet.Tables.Count > 0)
-        //    {
-        //        return dataTable;
-        //    }
-        //    return null;
-        //}
+        public int LinhasArquivos(LayoutArquivo layout)
+        {
+            return File.ReadLines(layout.File[0].FullName).Count();
+        }
     }
 }
